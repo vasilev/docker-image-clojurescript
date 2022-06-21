@@ -19,14 +19,14 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          
+
       - name: Log into registry (ghcr.io)
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_PASSWORD }}
-          
+
       - name: Extract metadata
         id: metadata
         uses: docker/metadata-action@v3
@@ -39,7 +39,7 @@ jobs:
           labels: |
             org.opencontainers.image.licenses=MIT, EPL-1.0, and more. Please see licensing terms for ClojureScript and [Node.js](https://hub.docker.com/_/node#License) first.
 
-            
+
       - name: Debug Print metadata
         run: echo '${{ steps.metadata.outputs.json }}'
 
@@ -48,5 +48,7 @@ jobs:
         with:
           context: .
           push: true
+          build-args: |
+            CLOJURE_VERSION=1.10.3.822
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
