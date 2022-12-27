@@ -12,7 +12,7 @@ jobs:
     if: github.event_name == 'push'
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Log into registry (DockerHub)
         uses: docker/login-action@v1
@@ -49,6 +49,6 @@ jobs:
           context: .
           push: true
           build-args: |
-            CLOJURE_VERSION=1.10.3.822
+            CLOJURE_VERSION=1.11.1.1208
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
